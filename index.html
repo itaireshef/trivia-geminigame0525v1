@@ -17,7 +17,7 @@
             min-height: 100vh;
             margin: 0;
             padding: 0.5rem;
-            box-sizing: border-box; /* Crucial for full height on mobile */
+            box-sizing: border-box;
             overflow: hidden; /* Prevent scrolling */
             -webkit-overflow-scrolling: touch;
         }
@@ -32,11 +32,9 @@
             text-align: center;
             display: flex;
             flex-direction: column;
-            gap: 0.8rem; /* Default gap for larger screens */
+            gap: 0.8rem; /* Default gap */
             min-height: 95vh;
-            justify-content: space-between; /* Default for larger screens */
-            align-items: center; /* Center content horizontally */
-            box-sizing: border-box;
+            justify-content: space-between;
         }
 
         /* Specific styles for the start screen container */
@@ -49,80 +47,55 @@
         @media (max-width: 640px) {
             .game-container {
                 padding: 0.7rem; /* Reduced padding for tighter fit */
-                gap: 0 !important; /* Remove default gap to control spacing manually */
-                min-height: 100vh !important; /* CRITICAL: Ensure it fits full height */
+                gap: 0.3rem !important; /* VERY TIGHT general gap for mobile */
+                min-height: 98vh; /* Ensure it fits almost full height */
                 border-radius: 1.5rem; /* Slightly less round on small screens for better fit */
-                justify-content: flex-start !important; /* CRITICAL: Align items to top to control spacing */
-                box-sizing: border-box; /* Ensure padding is included in height */
-            }
-
-            /* Top info: Progress & Score */
-            .w-full.flex.justify-between.items-center {
-                margin-bottom: 0.3rem !important; /* Reduce space after top info */
-                padding-top: 0.2rem; /* Small padding from top edge of container */
-            }
-            .progress-text, .score-text {
-                font-size: 0.9rem !important;
-            }
-
-            /* Word and Speaker */
-            .word-and-speaker {
-                gap: 0.1rem !important; /* Minimal gap between word and speaker */
-                margin-bottom: 0.2rem !important; /* CRITICAL: VERY TIGHT spacing to buttons (approx 1cm) */
-                width: 100%; /* Ensure it takes full width for centering */
-                flex-grow: 0; /* Prevent it from taking extra space */
             }
             .english-word {
-                font-size: 2.2rem !important; /* Adjusted font size for mobile */
-                margin-bottom: 0 !important; /* No bottom margin here, gap handles spacing */
+                margin-bottom: 0.1rem !important; /* EXTREMELY tight margin for word */
+                font-size: 2rem !important; /* Adjusted font size for mobile */
+            }
+            .answer-buttons-container {
+                gap: 0.2rem !important; /* VERY tight gap between buttons */
+                margin-top: 0.1rem !important; /* Tiny gap between word and buttons */
+            }
+            .answer-button {
+                height: 55px !important; /* Slightly reduced height for tighter vertical spacing */
+                font-size: 1.1rem !important; /* Adjusted Hebrew text size for tightness */
+                padding: 0.8rem !important; /* Smaller padding */
+            }
+            .feedback-container {
+                margin-top: 0.2rem !important; /* VERY tight margin for feedback, matches above */
+                min-height: 2.5rem !important; /* Smaller feedback container height */
+                padding: 0.6rem 0.8rem !important; /* Adjusted padding */
+                border-radius: 0.8rem !important; /* Slightly less rounded */
+            }
+            .feedback-message {
+                font-size: 1.05rem !important; /* Smaller font for feedback */
             }
             .speaker-button-wrapper {
-                width: 48px !important; /* Smaller speaker button wrapper */
-                height: 48px !important;
+                width: 50px !important; /* Smaller speaker button wrapper */
+                height: 50px !important;
                 box-shadow: 0 4px 8px rgba(0, 0, 0, 0.15) !important;
             }
             .speaker-button {
-                font-size: 1.5rem !important; /* Smaller speaker icon */
+                font-size: 1.6rem !important; /* Smaller speaker icon */
             }
-
-            /* Answer Buttons */
-            .answer-buttons-container {
-                gap: 0.2rem !important; /* VERY tight gap between buttons */
-                margin-top: 0.2rem !important; /* CRITICAL: Tiny gap between word+speaker and buttons (approx 1cm) */
-                flex-grow: 0; /* Prevent it from taking extra space */
+            .word-and-speaker {
+                gap: 0.2rem !important; /* Minimal gap between word and speaker */
+                margin-bottom: 0.4rem !important; /* Tighten up spacing from word to top info */
             }
-            .answer-button {
-                height: 75px !important; /* Increased height for larger buttons */
-                font-size: 1.45rem !important; /* Adjusted Hebrew text size for larger buttons */
-                padding: 0.6rem !important; /* Smaller padding */
-                border-radius: 0.7rem !important; /* Slightly less rounded */
-            }
-            
-            /* Feedback Container (CRITICAL) */
-            .feedback-container {
-                margin-top: 0.2rem !important; /* CRITICAL: VERY tight margin for feedback, matches above (approx 1cm) */
-                min-height: 3.2rem !important; /* Adjusted feedback container height */
-                padding: 0.5rem 0.8rem !important; /* Adjusted padding */
-                border-radius: 0.9rem !important; /* Adjusted border radius */
-                box-shadow: 0 3px 6px rgba(0, 0, 0, 0.1) !important; /* Lighter shadow */
-                flex-grow: 0; /* Prevent it from taking extra space */
-            }
-            .feedback-message {
-                font-size: 1.1rem !important; /* Adjusted font for feedback */
-            }
-
             /* Start screen mobile specific overrides */
             #start-screen h1 {
-                font-size: 2.6rem !important; /* Adjusted font for start screen title */
-                margin-bottom: 0.8rem !important; /* More space below title */
+                font-size: 2.6rem !important; /* Larger font for start screen title */
+                margin-bottom: 1rem !important; /* More space below title */
             }
             #start-screen h1 .emoji {
-                font-size: 2.2rem !important; /* Adjust emoji size */
+                font-size: 2.3rem !important; /* Adjust emoji size */
             }
             #start-button {
-                font-size: 1.5rem !important; /* Larger button text */
-                padding: 1rem 1.8rem !important; /* Larger padding */
-                border-radius: 1.2rem !important;
+                font-size: 1.6rem !important; /* Larger button text */
+                padding: 1rem 2rem !important; /* Larger padding */
             }
         }
 
@@ -170,14 +143,14 @@
             color: #2196F3; /* Blue text */
             padding: 1rem;
             border-radius: 0.8rem; /* Consistent rounded corners */
-            font-size: 1.45rem; /* Larger font size for buttons */
+            font-size: 1.2rem;
             font-weight: 600;
             cursor: pointer;
             transition: background-color 0.3s ease, transform 0.1s ease, box-shadow 0.3s ease, color 0.3s ease;
             border: none; /* No border for cleaner look */
             width: 100%;
             text-align: center;
-            height: 75px; /* Fixed height for consistency, larger buttons */
+            height: 60px; /* Fixed height for consistency */
             display: flex;
             align-items: center;
             justify-content: center;
@@ -246,7 +219,7 @@
             border-radius: 1rem; /* Rounded corners */
             box-shadow: 0 4px 8px rgba(0, 0, 0, 0.15); /* Shadow for the feedback box */
             transition: opacity 0.3s ease, background-color 0.3s ease, color 0.3s ease;
-            margin-top: 0.5rem; /* Default margin-top for larger screens */
+            margin-top: 0.5rem; /* Default margin-top */
         }
 
         .feedback-message {
@@ -276,9 +249,10 @@
             font-size: 2.8rem; /* Larger font for the English word */
             font-weight: bold;
             color: #212121; /* Very dark gray for strong contrast */
+            margin-bottom: 0.8rem; /* Standard margin-bottom */
             direction: ltr; /* Ensure English word is LTR */
-            flex-grow: 1; /* Allow word to take available space */
-            display: flex; /* For centering content within its own space */
+            flex-grow: 1;
+            display: flex;
             align-items: center;
             justify-content: center;
             text-shadow: 1px 1px 2px rgba(0,0,0,0.1); /* Subtle text shadow */
@@ -289,8 +263,7 @@
             align-items: center;
             justify-content: center;
             gap: 0.8rem; /* More space between word and speaker */
-            margin-bottom: 0.5rem; /* Space below word and speaker */
-            width: 100%; /* Ensure it takes full width for centering */
+            margin-bottom: 1rem; /* Space below word and speaker */
         }
 
         .end-screen-message {
@@ -450,7 +423,8 @@
         let currentQuestionIndex = 0;
         let score = 0;
         const totalQuestionsPerGame = 10;
-        
+        const totalVocabularySize = words.length;
+
         // --- DOM Element References ---
         const startScreen = document.getElementById('start-screen');
         const gameScreen = document.getElementById('game-screen');
@@ -477,19 +451,21 @@
         utterance.pitch = 1;
 
         // Function to ensure speech synthesis is ready, especially on mobile
-        // This function will be called on the first user interaction (start button click)
-        // to comply with browser autoplay policies.
         function initializeSpeechSynthesis() {
             if (speechSynth.speaking || speechSynth.pending) {
                 speechSynth.cancel();
             }
-            // Attempt to prime the speech synthesis engine for mobile browsers
+            // A common workaround for mobile: trigger a silent speech to prime the engine
+            // This utterance should be very short and without actual sound for the user
             const silentUtterance = new SpeechSynthesisUtterance(' ');
-            silentUtterance.volume = 0;
-            silentUtterance.rate = 0.1;
+            silentUtterance.volume = 0; // Make it silent
+            silentUtterance.rate = 0.1; // Very slow to be short
+            silentUtterance.pitch = 0; // Low pitch
             speechSynth.speak(silentUtterance);
+
+            // Wait a moment before cancelling the silent utterance and ensuring it's ready
             silentUtterance.onend = () => {
-                speechSynth.cancel(); // Clear the silent utterance
+                speechSynth.cancel(); // Cancel any existing speech including the silent one
             };
             silentUtterance.onerror = (event) => {
                 console.error('Speech Synthesis Error during initialization:', event.error);
@@ -565,31 +541,16 @@
             score = 0;
             currentQuestions = selectRandomQuestionsForGame(); // Purely random selection
 
-            // Ensure all screens are hidden initially and only game screen is shown
             startScreen.classList.add('hidden');
-            startScreen.classList.remove('flex');
             endScreen.classList.add('hidden');
-            endScreen.classList.remove('flex');
-
             gameScreen.classList.remove('hidden');
-            gameScreen.classList.add('flex');
-            
-            // Crucial: Clear any lingering content from previous game plays
-            englishWordDisplay.textContent = '';
-            answerButtonsContainer.innerHTML = '';
-            feedbackMessage.textContent = '';
-            feedbackContainer.style.opacity = '0';
-            feedbackContainer.classList.remove('correct-feedback-bg', 'incorrect-feedback-bg');
-            // Clear end screen specific content to prevent residue
-            finalScoreDisplay.textContent = '';
-            endMessageDisplay.textContent = '';
-
+            gameScreen.classList.add('flex'); // Ensure flex display
 
             displayQuestion();
         }
 
         function displayQuestion() {
-            // Reset feedback display for new question
+            // Reset feedback display
             feedbackMessage.textContent = '';
             feedbackContainer.style.opacity = '0';
             feedbackContainer.classList.remove('correct-feedback-bg', 'incorrect-feedback-bg');
@@ -617,7 +578,7 @@
                 answerButtonsContainer.appendChild(button);
             });
 
-            speakerButton.disabled = false; // Re-enable speaker button for new question
+            speakerButton.disabled = false;
         }
 
         function handleAnswer(event) {
@@ -650,7 +611,7 @@
                         button.classList.add('correct');
                     }
                 });
-                delayTime = 3500; // Increased delay slightly for incorrect answer feedback to be seen
+                delayTime = 3000;
             }
 
             scoreDisplay.textContent = `ניקוד: ${score}`;
@@ -672,15 +633,6 @@
         function endGame() {
             gameScreen.classList.add('hidden');
             gameScreen.classList.remove('flex');
-            
-            // Crucial: Clear any content from game screen before showing end screen
-            englishWordDisplay.textContent = '';
-            answerButtonsContainer.innerHTML = '';
-            feedbackMessage.textContent = '';
-            feedbackContainer.style.opacity = '0';
-            feedbackContainer.classList.remove('correct-feedback-bg', 'incorrect-feedback-bg');
-
-
             endScreen.classList.remove('hidden');
             endScreen.classList.add('flex');
 
@@ -707,15 +659,14 @@
                 speechSynth.speak(utterance);
             } else {
                 console.warn("Speech Synthesis API not supported or no word to speak.");
-                // Provide visual feedback if speech synthesis is not available and no other feedback is active
-                if (feedbackContainer.style.opacity === '0' || feedbackMessage.textContent === '') {
-                    feedbackMessage.textContent = "המכשיר שלך לא תומך בהקראת מילים או שגיאה בהקראה.";
+                // Provide visual feedback if speech synthesis is not available
+                if (feedbackContainer.style.opacity === '0') { // Only show if no other feedback is active
+                    feedbackMessage.textContent = "המכשיר שלך לא תומך בהקראת מילים.";
                     feedbackContainer.classList.add('incorrect-feedback-bg');
                     feedbackContainer.style.opacity = '1';
                     setTimeout(() => {
                         feedbackContainer.style.opacity = '0';
                         feedbackContainer.classList.remove('incorrect-feedback-bg');
-                        feedbackMessage.textContent = ''; // Clear message after fading out
                     }, 3000);
                 }
             }
@@ -727,14 +678,6 @@
             startScreen.classList.add('flex');
             gameScreen.classList.add('hidden');
             endScreen.classList.add('hidden');
-            // Ensure no lingering content from previous loads in development environment
-            englishWordDisplay.textContent = '';
-            answerButtonsContainer.innerHTML = '';
-            feedbackMessage.textContent = '';
-            feedbackContainer.style.opacity = '0';
-            feedbackContainer.classList.remove('correct-feedback-bg', 'incorrect-feedback-bg');
-            finalScoreDisplay.textContent = '';
-            endMessageDisplay.textContent = '';
         };
 
     </script>
