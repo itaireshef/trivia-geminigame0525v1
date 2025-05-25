@@ -8,71 +8,83 @@
     <style>
         /* Custom styles for the game */
         body {
-            font-family: 'Inter', sans-serif; /* Using Inter font as per instructions */
+            font-family: 'Inter', sans-serif;
             background-color: #f0f9ff; /* Light blue background */
             display: flex;
             justify-content: center;
             align-items: center;
-            min-height: 100vh; /* Full viewport height */
+            min-height: 100vh;
             margin: 0;
-            padding: 0.5rem; /* Reduced padding for mobile */
+            padding: 0.5rem;
             box-sizing: border-box;
-            overflow: hidden; /* Prevent scrolling */
-            -webkit-overflow-scrolling: touch; /* Smooth scrolling for iOS */
+            overflow: hidden;
+            -webkit-overflow-scrolling: touch;
         }
 
         .game-container {
             background-color: #ffffff;
-            border-radius: 1.5rem; /* Rounded corners */
+            border-radius: 1.5rem;
             box-shadow: 0 10px 20px rgba(0, 0, 0, 0.1);
-            padding: 1.5rem; /* Standard padding */
+            padding: 1.5rem;
             width: 100%;
-            max-width: 500px; /* Max width for better readability on large screens */
+            max-width: 500px;
             text-align: center;
             display: flex;
             flex-direction: column;
             gap: 0.8rem; /* Default gap */
-            min-height: 95vh; /* Ensure it takes up most of the viewport height */
-            justify-content: space-between; /* Distribute space vertically */
+            min-height: 95vh;
+            justify-content: space-between;
         }
 
-        /* Specific styles for the start screen container */
+        /* Specific styles for the start screen container (only applies to start screen) */
         #start-screen.game-container {
-            background: linear-gradient(135deg, #e0e7ff 0%, #c7d2fe 100%); /* Blue gradient */
+            /* Vibrant gradient for start screen */
+            background: linear-gradient(135deg, #a78bfa 0%, #818cf8 100%); /* Purple-blue gradient */
+            box-shadow: 0 15px 30px rgba(0, 0, 0, 0.2);
+        }
+        /* Ensure general game screen has white background */
+        #game-screen.game-container {
+             background-color: #ffffff;
         }
 
 
-        /* Responsive adjustments for mobile */
+        /* Responsive adjustments for mobile (critical for spacing) */
         @media (max-width: 640px) {
             .game-container {
                 padding: 0.8rem; /* Even smaller padding on small screens */
-                gap: 0.5rem; /* Tighter general gap for mobile */
+                gap: 0.4rem; /* Tighter general gap for mobile - VERY IMPORTANT */
                 min-height: 98vh; /* Ensure it fits almost full height */
             }
             /* Specific overrides to tighten spacing as per user request */
             .english-word {
-                margin-bottom: 0.2rem !important; /* Extremely tight margin for word on mobile */
+                margin-bottom: 0.1rem !important; /* EXTREMELY tight margin for word on mobile */
+                font-size: 2.2rem !important; /* Slightly smaller font for English word on mobile */
             }
             .answer-buttons-container {
-                gap: 0.3rem !important; /* Very tight gap for buttons */
-                margin-top: 0.2rem !important; /* Small gap between word and buttons */
+                gap: 0.2rem !important; /* VERY tight gap between buttons */
+                margin-top: 0.1rem !important; /* Tiny gap between word and buttons - VERY IMPORTANT */
+            }
+            .answer-button {
+                height: 58px !important; /* Slightly reduce button height for tighter fit */
+                font-size: 1.15rem !important; /* Adjust Hebrew text size for tightness */
             }
             .feedback-container {
-                margin-top: 0.3rem !important; /* Very tight margin for feedback */
-                min-height: 2.5rem !important; /* Smaller feedback container height */
+                margin-top: 0.2rem !important; /* VERY tight margin for feedback, matches above */
+                min-height: 2.8rem !important; /* Smaller feedback container height */
             }
             .feedback-message {
                 font-size: 1.1rem !important; /* Smaller font for feedback */
             }
             .speaker-button {
-                font-size: 1.6rem !important; /* Smaller speaker icon for mobile */
+                font-size: 1.5rem !important; /* Smaller speaker icon for mobile */
             }
             .word-and-speaker {
-                gap: 0.2rem !important; /* Smaller gap between word and speaker */
+                gap: 0.1rem !important; /* Minimal gap between word and speaker */
             }
             /* Start screen mobile specific overrides */
             #start-screen h1 {
                 font-size: 2.8rem !important; /* Larger font for start screen title */
+                margin-bottom: 0.8rem !important; /* More space below title */
             }
             #start-screen h1 .emoji {
                 font-size: 2.5rem !important; /* Adjust emoji size for mobile */
@@ -87,20 +99,20 @@
         .button-primary {
             background-color: #6366f1; /* Indigo 500 */
             color: white;
-            padding: 0.8rem 1.5rem; /* Standard padding */
-            border-radius: 0.75rem; /* Rounded corners */
-            font-size: 1.1rem; /* Standard font size */
+            padding: 0.8rem 1.5rem;
+            border-radius: 0.75rem;
+            font-size: 1.1rem;
             font-weight: bold;
             cursor: pointer;
             transition: background-color 0.3s ease, transform 0.1s ease, box-shadow 0.3s ease;
-            box-shadow: 0 4px 8px rgba(0, 0, 0, 0.2); /* More prominent shadow */
+            box-shadow: 0 4px 8px rgba(0, 0, 0, 0.2);
             border: none;
-            width: 100%; /* Full width */
+            width: 100%;
         }
 
         .button-primary:hover {
             background-color: #4f46e5; /* Indigo 600 */
-            transform: translateY(-3px); /* More pronounced hover effect */
+            transform: translateY(-3px);
             box-shadow: 0 6px 12px rgba(0, 0, 0, 0.25);
         }
 
@@ -112,19 +124,19 @@
         /* Animation for start button */
         @keyframes pulse {
             0% { transform: scale(1); }
-            50% { transform: scale(1.03); } /* Slightly more pronounced pulse */
+            50% { transform: scale(1.03); }
             100% { transform: scale(1); }
         }
         #start-button {
-            animation: pulse 1.7s infinite ease-in-out; /* Slower, smoother pulse */
+            animation: pulse 1.7s infinite ease-in-out;
         }
 
         .answer-button {
             background-color: #e0e7ff; /* Indigo 100 */
             color: #4338ca; /* Indigo 700 */
-            padding: 1rem; /* Increased padding for better tap target and readability */
-            border-radius: 0.75rem; /* Rounded corners */
-            font-size: 1.25rem; /* Increased font size for Hebrew words */
+            padding: 1rem;
+            border-radius: 0.75rem;
+            font-size: 1.25rem;
             font-weight: 600;
             cursor: pointer;
             transition: background-color 0.3s ease, transform 0.1s ease, box-shadow 0.3s ease;
@@ -135,7 +147,7 @@
             display: flex;
             align-items: center;
             justify-content: center;
-            box-shadow: 0 2px 4px rgba(0, 0, 0, 0.1); /* Subtle shadow for answer buttons */
+            box-shadow: 0 2px 4px rgba(0, 0, 0, 0.1);
         }
 
         .answer-button:hover:not(.correct):not(.incorrect):not(:disabled) {
@@ -164,12 +176,12 @@
         .speaker-button {
             background: none;
             border: none;
-            font-size: 2rem; /* Standard speaker icon size */
+            font-size: 2rem;
             cursor: pointer;
             color: #4f46e5; /* Indigo 600 */
             transition: transform 0.2s ease;
             padding: 0;
-            line-height: 1; /* Align icon better */
+            line-height: 1;
             display: flex;
             align-items: center;
             justify-content: center;
@@ -179,18 +191,18 @@
             transform: scale(1.1);
         }
 
-        .feedback-container { /* New container for fixed feedback position */
+        .feedback-container {
             min-height: 4rem; /* Fixed height to prevent layout shift */
             display: flex;
             align-items: center;
             justify-content: center;
             width: 100%;
             margin-top: 0.5rem; /* Standard margin-top for feedback */
-            transition: opacity 0.3s ease; /* Smooth transition for feedback message */
+            transition: opacity 0.3s ease;
         }
 
         .feedback-message {
-            font-size: 1.3rem; /* Standard font size */
+            font-size: 1.3rem;
             font-weight: bold;
             text-align: center;
             color: #1f2937; /* Default dark color */
@@ -204,17 +216,17 @@
 
 
         .progress-text, .score-text {
-            font-size: 1rem; /* Slightly smaller font size */
+            font-size: 1rem;
             color: #4b5563; /* Gray 600 */
         }
 
         .english-word {
-            font-size: 2.5rem; /* Standard font for the English word */
+            font-size: 2.5rem;
             font-weight: bold;
             color: #1f2937; /* Gray 900 */
-            margin-bottom: 0.8rem; /* Standard margin-bottom */
+            margin-bottom: 0.8rem;
             direction: ltr; /* Ensure English word is LTR */
-            flex-grow: 1; /* Allow word to take available space */
+            flex-grow: 1;
             display: flex;
             align-items: center;
             justify-content: center;
@@ -222,20 +234,20 @@
 
         .word-and-speaker {
             display: flex;
-            align-items: center; /* Vertically align word and speaker */
-            justify-content: center; /* Center horizontally */
-            gap: 0.5rem; /* Small gap between word and speaker */
+            align-items: center;
+            justify-content: center;
+            gap: 0.5rem;
         }
 
         .end-screen-message {
-            font-size: 1.5rem; /* Standard font size */
+            font-size: 1.5rem;
             font-weight: bold;
             color: #1f2937;
             margin-bottom: 0.8rem;
         }
 
         .end-screen-score {
-            font-size: 2rem; /* Standard font size */
+            font-size: 2rem;
             font-weight: bold;
             color: #4f46e5; /* Indigo 600 */
             margin-bottom: 1rem;
@@ -243,24 +255,39 @@
 
         /* Start screen specific styles */
         #start-screen h1 {
-            font-size: 3.5rem; /* Very large font for the title */
+            font-size: 3.5rem;
             font-weight: bold;
-            color: #1f2937;
+            color: #ffffff; /* White text for gradient background */
+            text-shadow: 2px 2px 4px rgba(0,0,0,0.2); /* Text shadow for pop */
             margin-bottom: 0.5rem;
             display: flex;
             align-items: center;
-            gap: 0.75rem; /* More space between text and emoji */
-            justify-content: center; /* Center the title and emoji */
+            gap: 0.75rem;
+            justify-content: center;
         }
         #start-screen h1 .emoji {
-            font-size: 3.2rem; /* Size of the emoji */
-            filter: drop-shadow(2px 2px 4px rgba(0,0,0,0.2)); /* Shadow for emoji */
+            font-size: 3.2rem;
+            filter: drop-shadow(2px 2px 4px rgba(0,0,0,0.2));
         }
         #start-screen button {
-            padding: 1.2rem 2.5rem; /* Larger padding for the button */
-            font-size: 1.8rem; /* Larger font size for the button */
-            border-radius: 1.2rem; /* More rounded corners */
+            padding: 1.2rem 2.5rem;
+            font-size: 1.8rem;
+            border-radius: 1.2rem;
+            background-color: #ffffff; /* White button on gradient background */
+            color: #6366f1; /* Indigo 500 text for white button */
+            box-shadow: 0 6px 12px rgba(0, 0, 0, 0.25); /* More prominent shadow for start button */
         }
+        #start-screen button:hover {
+            background-color: #f3f4f6; /* Light gray on hover */
+            color: #4f46e5; /* Darker indigo on hover */
+            transform: translateY(-4px); /* Even more pronounced hover */
+            box-shadow: 0 8px 16px rgba(0, 0, 0, 0.3);
+        }
+        #start-screen button:active {
+            transform: translateY(0);
+            box-shadow: 0 4px 8px rgba(0, 0, 0, 0.2);
+        }
+
 
     </style>
 </head>
@@ -411,10 +438,9 @@
             let selectedForThisGame = [];
             let allAvailableWords = [...words];
 
-            // 1. Prioritize words that were answered incorrectly, if their cooldown has passed
             let eligibleIncorrectWords = incorrectWordsForReview.filter(wordObj => 
-                currentQuestionIndex - wordObj.lastShownIndex >= incorrectReviewCooldown && // Check cooldown
-                !recentWordsHistory.includes(wordObj.english) // And not too recent overall
+                currentQuestionIndex - wordObj.lastShownIndex >= incorrectReviewCooldown && 
+                !recentWordsHistory.includes(wordObj.english) 
             );
             shuffleArray(eligibleIncorrectWords);
 
@@ -423,7 +449,6 @@
                 selectedForThisGame.push(word);
             }
 
-            // 2. Fill the rest of the questions from words not recently shown (general pool)
             let generalPool = allAvailableWords.filter(wordObj => 
                 !recentWordsHistory.includes(wordObj.english) && 
                 !selectedForThisGame.some(q => q.english === wordObj.english)
@@ -432,12 +457,11 @@
 
             while (selectedForThisGame.length < totalQuestions && generalPool.length > 0) {
                 const word = generalPool.shift();
-                if (!selectedForThisGame.some(q => q.english === word.english)) { // Double check for duplicates
+                if (!selectedForThisGame.some(q => q.english === word.english)) {
                     selectedForThisGame.push(word);
                 }
             }
 
-            // 3. Fallback: If still not enough unique words, pick from remaining words
             if (selectedForThisGame.length < totalQuestions) {
                 let backupPool = allAvailableWords.filter(wordObj => 
                     !selectedForThisGame.some(q => q.english === wordObj.english)
@@ -469,7 +493,6 @@
                 }
             }
             
-            // Fallback if not enough unique incorrect options (e.g., very small vocabulary list)
             while (incorrectOptions.length < 3 && allOtherHebrewWords.length > incorrectOptions.length) {
                 const randomIndex = Math.floor(Math.random() * allOtherHebrewWords.length);
                 const candidate = allOtherHebrewWords[randomIndex];
@@ -486,9 +509,6 @@
 
         function startGame() {
             recentWordsHistory = []; 
-            // incorrectWordsForReview is *not* reset here, as its purpose is to carry over words between games for review.
-            // If you want it reset every time, uncomment the line below:
-            // incorrectWordsForReview = []; 
             currentQuestionIndex = 0;
             score = 0;
 
@@ -556,7 +576,7 @@
 
             if (selectedAnswer === correctHebrew) {
                 score++;
-                feedbackMessage.textContent = 'נכון! �';
+                feedbackMessage.textContent = 'נכון! 👏';
                 feedbackMessage.classList.add('correct-feedback');
                 selectedButton.classList.add('correct');
                 delayTime = 1500;
@@ -618,17 +638,16 @@
 
         function speakWord() {
             const wordToSpeak = englishWordDisplay.textContent;
-            if ('speechSynthesis' in window && wordToSpeak) { // Ensure wordToSpeak is not empty
+            if ('speechSynthesis' in window && wordToSpeak) {
                 window.speechSynthesis.cancel();
                 const utterance = new SpeechSynthesisUtterance(wordToSpeak);
                 utterance.lang = 'en-US';
-                utterance.volume = 1; // Full volume
-                utterance.rate = 1; // Normal speed
-                utterance.pitch = 1; // Normal pitch
+                utterance.volume = 1;
+                utterance.rate = 1;
+                utterance.pitch = 1;
                 window.speechSynthesis.speak(utterance);
             } else {
                 console.warn("Speech Synthesis API not supported or no word to speak.");
-                // Only show this message if it's relevant and not overriding game feedback
                 if (feedbackMessage.style.opacity === '0' || feedbackMessage.classList.contains('incorrect-feedback')) {
                     feedbackMessage.textContent = "המכשיר שלך לא תומך בהקראת מילים או שיש בעיה.";
                     feedbackMessage.classList.add('incorrect-feedback');
@@ -651,4 +670,3 @@
     </script>
 </body>
 </html>
-�
