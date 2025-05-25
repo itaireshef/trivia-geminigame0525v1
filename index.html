@@ -25,7 +25,7 @@
             background-color: #ffffff;
             border-radius: 1.5rem; /* Rounded corners */
             box-shadow: 0 10px 20px rgba(0, 0, 0, 0.1);
-            padding: 1.5rem; /* Reduced padding for mobile */
+            padding: 1.5rem; /* Standard padding */
             width: 100%;
             max-width: 500px; /* Max width for better readability on large screens */
             text-align: center;
@@ -36,22 +36,30 @@
             justify-content: space-between; /* Distribute space vertically */
         }
 
+        /* Specific styles for the start screen container */
+        #start-screen.game-container {
+            background: linear-gradient(135deg, #e0e7ff 0%, #c7d2fe 100%); /* Blue gradient */
+        }
+
+
         /* Responsive adjustments for mobile */
         @media (max-width: 640px) {
             .game-container {
                 padding: 0.8rem; /* Even smaller padding on small screens */
-                gap: 0.5rem; /* Tighter gap for mobile */
+                gap: 0.5rem; /* Tighter general gap for mobile */
                 min-height: 98vh; /* Ensure it fits almost full height */
             }
+            /* Specific overrides to tighten spacing as per user request */
             .english-word {
-                margin-bottom: 0.4rem !important; /* Extremely tight margin for word on mobile */
+                margin-bottom: 0.2rem !important; /* Extremely tight margin for word on mobile */
             }
             .answer-buttons-container {
-                gap: 0.2rem !important; /* Very tight gap for buttons */
+                gap: 0.3rem !important; /* Very tight gap for buttons */
+                margin-top: 0.2rem !important; /* Small gap between word and buttons */
             }
             .feedback-container {
-                margin-top: 0.2rem !important; /* Very tight margin for feedback */
-                min-height: 3rem !important; /* Smaller feedback container height */
+                margin-top: 0.3rem !important; /* Very tight margin for feedback */
+                min-height: 2.5rem !important; /* Smaller feedback container height */
             }
             .feedback-message {
                 font-size: 1.1rem !important; /* Smaller font for feedback */
@@ -62,11 +70,15 @@
             .word-and-speaker {
                 gap: 0.2rem !important; /* Smaller gap between word and speaker */
             }
+            /* Start screen mobile specific overrides */
             #start-screen h1 {
-                font-size: 2.5rem !important; /* Larger font for start screen title */
+                font-size: 2.8rem !important; /* Larger font for start screen title */
+            }
+            #start-screen h1 .emoji {
+                font-size: 2.5rem !important; /* Adjust emoji size for mobile */
             }
             #start-button {
-                font-size: 1.5rem !important; /* Larger button text for start screen */
+                font-size: 1.6rem !important; /* Larger button text for start screen */
                 padding: 1rem 2rem !important; /* Larger padding for start button */
             }
         }
@@ -80,30 +92,31 @@
             font-size: 1.1rem; /* Standard font size */
             font-weight: bold;
             cursor: pointer;
-            transition: background-color 0.3s ease, transform 0.1s ease;
-            box-shadow: 0 4px 6px rgba(0, 0, 0, 0.1);
+            transition: background-color 0.3s ease, transform 0.1s ease, box-shadow 0.3s ease;
+            box-shadow: 0 4px 8px rgba(0, 0, 0, 0.2); /* More prominent shadow */
             border: none;
             width: 100%; /* Full width */
         }
 
         .button-primary:hover {
             background-color: #4f46e5; /* Indigo 600 */
-            transform: translateY(-2px);
+            transform: translateY(-3px); /* More pronounced hover effect */
+            box-shadow: 0 6px 12px rgba(0, 0, 0, 0.25);
         }
 
         .button-primary:active {
             transform: translateY(0);
-            box-shadow: none;
+            box-shadow: 0 2px 4px rgba(0, 0, 0, 0.15);
         }
 
         /* Animation for start button */
         @keyframes pulse {
             0% { transform: scale(1); }
-            50% { transform: scale(1.02); }
+            50% { transform: scale(1.03); } /* Slightly more pronounced pulse */
             100% { transform: scale(1); }
         }
         #start-button {
-            animation: pulse 1.5s infinite;
+            animation: pulse 1.7s infinite ease-in-out; /* Slower, smoother pulse */
         }
 
         .answer-button {
@@ -114,7 +127,7 @@
             font-size: 1.25rem; /* Increased font size for Hebrew words */
             font-weight: 600;
             cursor: pointer;
-            transition: background-color 0.3s ease, transform 0.1s ease;
+            transition: background-color 0.3s ease, transform 0.1s ease, box-shadow 0.3s ease;
             border: 2px solid #c7d2fe; /* Indigo 200 border */
             width: 100%;
             text-align: center;
@@ -122,11 +135,13 @@
             display: flex;
             align-items: center;
             justify-content: center;
+            box-shadow: 0 2px 4px rgba(0, 0, 0, 0.1); /* Subtle shadow for answer buttons */
         }
 
         .answer-button:hover:not(.correct):not(.incorrect):not(:disabled) {
             background-color: #c7d2fe; /* Indigo 200 */
             transform: translateY(-2px);
+            box-shadow: 0 4px 8px rgba(0, 0, 0, 0.15);
         }
 
         .answer-button.correct {
@@ -149,15 +164,15 @@
         .speaker-button {
             background: none;
             border: none;
-            font-size: 2rem; /* Slightly smaller speaker icon */
+            font-size: 2rem; /* Standard speaker icon size */
             cursor: pointer;
             color: #4f46e5; /* Indigo 600 */
             transition: transform 0.2s ease;
             padding: 0;
             line-height: 1; /* Align icon better */
-            display: flex; /* Use flex to center content if needed */
-            align-items: center; /* Center vertically */
-            justify-content: center; /* Center horizontally */
+            display: flex;
+            align-items: center;
+            justify-content: center;
         }
 
         .speaker-button:hover {
@@ -170,15 +185,14 @@
             align-items: center;
             justify-content: center;
             width: 100%;
-            margin-top: 0.5rem; /* Adjusted margin - closer to buttons */
+            margin-top: 0.5rem; /* Standard margin-top for feedback */
             transition: opacity 0.3s ease; /* Smooth transition for feedback message */
         }
 
         .feedback-message {
-            font-size: 1.3rem; /* Slightly smaller font size */
+            font-size: 1.3rem; /* Standard font size */
             font-weight: bold;
             text-align: center;
-            /* Added specific colors for feedback */
             color: #1f2937; /* Default dark color */
         }
         .feedback-message.correct-feedback {
@@ -195,15 +209,15 @@
         }
 
         .english-word {
-            font-size: 2.5rem; /* Slightly smaller font for the English word */
+            font-size: 2.5rem; /* Standard font for the English word */
             font-weight: bold;
             color: #1f2937; /* Gray 900 */
-            margin-bottom: 0.8rem; /* Reduced margin - closer to buttons */
+            margin-bottom: 0.8rem; /* Standard margin-bottom */
             direction: ltr; /* Ensure English word is LTR */
             flex-grow: 1; /* Allow word to take available space */
-            display: flex; /* Added flex to center content if needed */
-            align-items: center; /* Center vertically */
-            justify-content: center; /* Center horizontally */
+            display: flex;
+            align-items: center;
+            justify-content: center;
         }
 
         .word-and-speaker {
@@ -214,41 +228,46 @@
         }
 
         .end-screen-message {
-            font-size: 1.5rem; /* Slightly smaller font size */
+            font-size: 1.5rem; /* Standard font size */
             font-weight: bold;
             color: #1f2937;
-            margin-bottom: 0.8rem; /* Reduced margin */
+            margin-bottom: 0.8rem;
         }
 
         .end-screen-score {
-            font-size: 2rem; /* Slightly smaller font size */
+            font-size: 2rem; /* Standard font size */
             font-weight: bold;
             color: #4f46e5; /* Indigo 600 */
-            margin-bottom: 1rem; /* Reduced margin */
+            margin-bottom: 1rem;
         }
 
         /* Start screen specific styles */
         #start-screen h1 {
-            font-size: 3rem; /* Very large font for the title */
+            font-size: 3.5rem; /* Very large font for the title */
             font-weight: bold;
             color: #1f2937;
             margin-bottom: 0.5rem;
             display: flex;
             align-items: center;
-            gap: 0.5rem;
+            gap: 0.75rem; /* More space between text and emoji */
+            justify-content: center; /* Center the title and emoji */
+        }
+        #start-screen h1 .emoji {
+            font-size: 3.2rem; /* Size of the emoji */
+            filter: drop-shadow(2px 2px 4px rgba(0,0,0,0.2)); /* Shadow for emoji */
         }
         #start-screen button {
             padding: 1.2rem 2.5rem; /* Larger padding for the button */
-            font-size: 1.3rem; /* Larger font size for the button */
-            border-radius: 1rem; /* More rounded corners */
+            font-size: 1.8rem; /* Larger font size for the button */
+            border-radius: 1.2rem; /* More rounded corners */
         }
 
     </style>
 </head>
 <body>
     <div id="game-container" class="game-container">
-        <div id="start-screen" class="flex flex-col items-center justify-center gap-6 flex-grow">
-            <h1>משחק הטריוויה הגדול! 🎉</h1>
+        <div id="start-screen" class="game-container flex flex-col items-center justify-center gap-6 flex-grow">
+            <h1>משחק הטריוויה הגדול! <span class="emoji">🎉</span></h1>
             <button id="start-button" class="button-primary">בואי נתחיל!</button>
         </div>
 
@@ -280,7 +299,7 @@
     </div>
 
     <script>
-        // Array of English words and their Hebrew translations - UPDATED
+        // Array of English words and their Hebrew translations
         const words = [
             { english: "Angry", hebrew: "כועס" },
             { english: "Apple", hebrew: "תפוח" },
@@ -335,7 +354,6 @@
             { english: "Van", hebrew: "ואן" },
             { english: "Very", hebrew: "מאוד" },
             { english: "Wet", hebrew: "רטוב" },
-            // Added words based on your request
             { english: "Under", hebrew: "מתחת" },
             { english: "Behind", hebrew: "מאחורי" },
             { english: "Next to", hebrew: "ליד" },
@@ -346,12 +364,12 @@
         ];
 
         // --- Game State Variables ---
-        let currentQuestions = []; // Array to hold the 10 questions for the current game
+        let currentQuestions = [];
         let currentQuestionIndex = 0;
         let score = 0;
         const totalQuestions = 10;
 
-        // New variables for word repetition logic
+        // Word repetition logic
         const recentWordsLimit = 30; // Do not repeat a word for this many questions in overall game history
         let recentWordsHistory = []; // Stores the last X English words displayed (English word string)
         const incorrectReviewCooldown = 10; // Incorrect words can re-appear after this many questions
@@ -381,7 +399,6 @@
 
         // --- Helper Functions ---
 
-        // Shuffles an array randomly (Fisher-Yates algorithm)
         function shuffleArray(array) {
             for (let i = array.length - 1; i > 0; i--) {
                 const j = Math.floor(Math.random() * (i + 1));
@@ -390,10 +407,9 @@
             return array;
         }
 
-        // Selects a pool of words for the current game session, respecting repetition rules
         function selectRandomQuestions() {
             let selectedForThisGame = [];
-            let allAvailableWords = [...words]; // Clone to modify
+            let allAvailableWords = [...words];
 
             // 1. Prioritize words that were answered incorrectly, if their cooldown has passed
             let eligibleIncorrectWords = incorrectWordsForReview.filter(wordObj => 
@@ -402,47 +418,47 @@
             );
             shuffleArray(eligibleIncorrectWords);
 
-            // Add up to totalQuestions from eligibleIncorrectWords
             while (selectedForThisGame.length < totalQuestions && eligibleIncorrectWords.length > 0) {
-                selectedForThisGame.push(eligibleIncorrectWords.shift());
+                const word = eligibleIncorrectWords.shift();
+                selectedForThisGame.push(word);
             }
 
             // 2. Fill the rest of the questions from words not recently shown (general pool)
             let generalPool = allAvailableWords.filter(wordObj => 
-                !recentWordsHistory.includes(wordObj.english) && // Not in recent history
-                !selectedForThisGame.some(q => q.english === wordObj.english) // Not already selected
+                !recentWordsHistory.includes(wordObj.english) && 
+                !selectedForThisGame.some(q => q.english === wordObj.english)
             );
             shuffleArray(generalPool);
 
             while (selectedForThisGame.length < totalQuestions && generalPool.length > 0) {
-                selectedForThisGame.push(generalPool.shift());
+                const word = generalPool.shift();
+                if (!selectedForThisGame.some(q => q.english === word.english)) { // Double check for duplicates
+                    selectedForThisGame.push(word);
+                }
             }
 
-            // 3. Fallback: If still not enough unique words (e.g., small word list, strict rules), pick from remaining words
-            // This is a safety net to ensure 10 questions are always available
+            // 3. Fallback: If still not enough unique words, pick from remaining words
             if (selectedForThisGame.length < totalQuestions) {
                 let backupPool = allAvailableWords.filter(wordObj => 
                     !selectedForThisGame.some(q => q.english === wordObj.english)
                 );
                 shuffleArray(backupPool);
                 while (selectedForThisGame.length < totalQuestions && backupPool.length > 0) {
-                    selectedForThisGame.push(backupPool.shift());
+                    const word = backupPool.shift();
+                    if (!selectedForThisGame.some(q => q.english === word.english)) {
+                        selectedForThisGame.push(word);
+                    }
                 }
             }
             
             return selectedForThisGame;
         }
 
-        // Generates 3 incorrect Hebrew answers for a given correct answer
         function generateIncorrectAnswers(correctHebrew) {
             const incorrectOptions = [];
-            // Filter out the correct Hebrew word from all possible Hebrew words
             const allOtherHebrewWords = words.map(w => w.hebrew).filter(h => h !== correctHebrew);
-
-            // Use a temporary history to avoid immediate repetition within the *same* set of options
             let tempUsedOptions = new Set([correctHebrew]); 
 
-            // Shuffle the pool of other Hebrew words
             const shuffledOthers = shuffleArray(allOtherHebrewWords);
 
             for (let i = 0; i < shuffledOthers.length && incorrectOptions.length < 3; i++) {
@@ -468,9 +484,7 @@
 
         // --- Game Flow Functions ---
 
-        // Starts a new game
         function startGame() {
-            // Reset state for a new game
             recentWordsHistory = []; 
             // incorrectWordsForReview is *not* reset here, as its purpose is to carry over words between games for review.
             // If you want it reset every time, uncomment the line below:
@@ -478,7 +492,7 @@
             currentQuestionIndex = 0;
             score = 0;
 
-            currentQuestions = selectRandomQuestions(); // Intelligently selects questions for the current game
+            currentQuestions = selectRandomQuestions();
 
             startScreen.classList.add('hidden');
             endScreen.classList.add('hidden');
@@ -488,13 +502,11 @@
             displayQuestion();
         }
 
-        // Displays the current question
         function displayQuestion() {
-            // Clear feedback message and hide it
             feedbackMessage.textContent = '';
-            feedbackMessage.style.opacity = '0'; // Hide with opacity for smooth transition
-            feedbackMessage.classList.remove('correct-feedback', 'incorrect-feedback'); // Clear previous classes
-            answerButtonsContainer.innerHTML = ''; // Clear previous buttons
+            feedbackMessage.style.opacity = '0';
+            feedbackMessage.classList.remove('correct-feedback', 'incorrect-feedback');
+            answerButtonsContainer.innerHTML = '';
 
             progressDisplay.textContent = `שאלה ${currentQuestionIndex + 1} מתוך ${totalQuestions}`;
             scoreDisplay.textContent = `ניקוד: ${score}`;
@@ -502,13 +514,11 @@
             const currentQuestion = currentQuestions[currentQuestionIndex];
             englishWordDisplay.textContent = currentQuestion.english;
 
-            // Add current word to history (English string only) and manage its size
             recentWordsHistory.push(currentQuestion.english);
             if (recentWordsHistory.length > recentWordsLimit) {
-                recentWordsHistory.shift(); // Remove oldest word if limit exceeded
+                recentWordsHistory.shift();
             }
             
-            // If this word was in incorrectWordsForReview, update its lastShownIndex
             const reviewWordEntry = incorrectWordsForReview.find(w => w.english === currentQuestion.english);
             if (reviewWordEntry) {
                 reviewWordEntry.lastShownIndex = currentQuestionIndex;
@@ -532,7 +542,6 @@
             speakerButton.disabled = false;
         }
 
-        // Handles user's answer selection
         function handleAnswer(event) {
             const selectedButton = event.target;
             const selectedAnswer = selectedButton.dataset.answer;
@@ -540,7 +549,6 @@
             const correctHebrew = currentQuestion.hebrew;
             let delayTime = 0;
 
-            // Disable all answer buttons
             Array.from(answerButtonsContainer.children).forEach(button => {
                 button.disabled = true;
             });
@@ -548,40 +556,36 @@
 
             if (selectedAnswer === correctHebrew) {
                 score++;
-                feedbackMessage.textContent = 'נכון! 👏';
+                feedbackMessage.textContent = 'נכון! �';
                 feedbackMessage.classList.add('correct-feedback');
                 selectedButton.classList.add('correct');
-                delayTime = 1500; // 1.5 seconds for correct answer
-                // Remove from incorrectWordsForReview if correctly answered now
+                delayTime = 1500;
                 incorrectWordsForReview = incorrectWordsForReview.filter(w => w.english !== currentQuestion.english);
             } else {
                 feedbackMessage.textContent = `לא בדיוק... התשובה הנכונה היא: ${correctHebrew}`;
                 feedbackMessage.classList.add('incorrect-feedback');
                 selectedButton.classList.add('incorrect');
-                // Highlight the correct answer
                 Array.from(answerButtonsContainer.children).forEach(button => {
                     if (button.dataset.answer === correctHebrew) {
                         button.classList.add('correct');
                     }
                 });
-                delayTime = 3000; // 3 seconds for incorrect answer
+                delayTime = 3000;
 
-                // Add to incorrectWordsForReview if not already there, or update last incorrect attempt
                 const existingIncorrect = incorrectWordsForReview.find(w => w.english === currentQuestion.english);
                 if (!existingIncorrect) {
                     incorrectWordsForReview.push({ english: currentQuestion.english, hebrew: currentQuestion.hebrew, lastShownIndex: currentQuestionIndex });
                 } else {
-                    existingIncorrect.lastShownIndex = currentQuestionIndex; // Update timestamp
+                    existingIncorrect.lastShownIndex = currentQuestionIndex;
                 }
             }
 
             scoreDisplay.textContent = `ניקוד: ${score}`;
-            feedbackMessage.style.opacity = '1'; // Show feedback message
+            feedbackMessage.style.opacity = '1';
 
             setTimeout(nextQuestion, delayTime);
         }
 
-        // Moves to the next question or ends the game
         function nextQuestion() {
             currentQuestionIndex++;
             if (currentQuestionIndex < totalQuestions) {
@@ -591,7 +595,6 @@
             }
         }
 
-        // Ends the game and displays summary with tailored and humorous feedback
         function endGame() {
             gameScreen.classList.add('hidden');
             gameScreen.classList.remove('flex');
@@ -603,29 +606,32 @@
             let message = '';
             if (score === totalQuestions) {
                 message = 'וואו! את פשוט אלופה! המילים רוקדות בשבילך! 💃 איזה כישרון מדהים!';
-            } else if (score >= 8) { // 8-9 correct
+            } else if (score >= 8) {
                 message = 'נהדר! את מבינה מילים כמו קוסמת! ✨ המשיכי לתרגל ואף מילה לא תברח לך!';
-            } else if (score >= 5) { // 5-7 correct
+            } else if (score >= 5) {
                 message = 'יפה מאוד! את בדרך הנכונה! תרגול נוסף יהפוך אותך לכוכבת מילים אמיתית! 🌟 אלופה!';
-            } else { // 0-4 correct
-                message = 'ניסית יפה מאוד! כל התחלה קשה, אבל את חזקה ואנחנו נלמד ביחד! בואי ננסה שוב ונראה למילים מי הבוס! �';
+            } else {
+                message = 'ניסית יפה מאוד! כל התחלה קשה, אבל את חזקה ואנחנו נלמד ביחד! בואי ננסה שוב ונראה למילים מי הבוס! 💪';
             }
             endMessageDisplay.textContent = message;
         }
 
-        // Speaks the English word using Web Speech API
         function speakWord() {
             const wordToSpeak = englishWordDisplay.textContent;
-            if ('speechSynthesis' in window) {
+            if ('speechSynthesis' in window && wordToSpeak) { // Ensure wordToSpeak is not empty
                 window.speechSynthesis.cancel();
                 const utterance = new SpeechSynthesisUtterance(wordToSpeak);
                 utterance.lang = 'en-US';
+                utterance.volume = 1; // Full volume
+                utterance.rate = 1; // Normal speed
+                utterance.pitch = 1; // Normal pitch
                 window.speechSynthesis.speak(utterance);
             } else {
-                console.warn("Speech Synthesis API not supported in this browser.");
-                if (feedbackMessage.style.opacity === '0') {
-                    feedbackMessage.textContent = "המכשיר שלך לא תומך בהקראת מילים.";
-                    feedbackMessage.classList.add('incorrect-feedback'); // Show in red as it's an error
+                console.warn("Speech Synthesis API not supported or no word to speak.");
+                // Only show this message if it's relevant and not overriding game feedback
+                if (feedbackMessage.style.opacity === '0' || feedbackMessage.classList.contains('incorrect-feedback')) {
+                    feedbackMessage.textContent = "המכשיר שלך לא תומך בהקראת מילים או שיש בעיה.";
+                    feedbackMessage.classList.add('incorrect-feedback');
                     feedbackMessage.style.opacity = '1';
                     setTimeout(() => {
                         feedbackMessage.style.opacity = '0';
@@ -635,7 +641,6 @@
             }
         }
 
-        // Initialize the game on window load by showing the start screen
         window.onload = function() {
             startScreen.classList.remove('hidden');
             startScreen.classList.add('flex');
