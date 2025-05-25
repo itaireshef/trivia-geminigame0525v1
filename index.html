@@ -215,8 +215,7 @@
 <body>
     <div id="game-container" class="game-container">
         <div id="start-screen" class="flex flex-col items-center justify-center gap-6 flex-grow">
-            <h1 class="text-3xl font-bold text-gray-800">מילים קדימה!</h1>
-            <p class="text-lg text-gray-600">בואי נתרגל אוצר מילים באנגלית למבחן!</p>
+            <h1 class="text-3xl font-bold text-gray-800">משחק הטריוויה הגדול!</h1>
             <button id="start-button" class="button-primary">בואי נתחיל!</button>
         </div>
 
@@ -319,6 +318,12 @@
         let score = 0;
         const totalQuestions = 10;
 
+        // New variables for word repetition logic
+        const recentWordsLimit = 30; // Do not repeat a word for this many questions
+        let recentWordsHistory = []; // Stores the last X English words displayed
+        const incorrectReviewLimit = 10; // Incorrect words can re-appear after this many questions
+        let incorrectWordsForReview = []; // Stores words that were answered incorrectly
+
         // --- DOM Element References ---
         const startScreen = document.getElementById('start-screen');
         const gameScreen = document.getElementById('game-screen');
@@ -328,7 +333,7 @@
         const englishWordDisplay = document.getElementById('english-word');
         const speakerButton = document.getElementById('speaker-button');
         const answerButtonsContainer = document.getElementById('answer-buttons-container');
-        const feedbackContainer = document.getElementById('feedback-container'); // New reference
+        const feedbackContainer = document.getElementById('feedback-container');
         const feedbackMessage = document.getElementById('feedback-message');
         const progressDisplay = document.getElementById('progress-display');
         const scoreDisplay = document.getElementById('score-display');
@@ -352,25 +357,65 @@
             return array;
         }
 
-        // Selects 10 unique random questions for the game
+        // Selects 10 unique random questions for the game, respecting repetition rules
         function selectRandomQuestions() {
-            const shuffledWords = shuffleArray([...words]);
-            // Ensure we don't try to pick more questions than available words
-            const numQuestionsToPick = Math.min(totalQuestions, shuffledWords.length);
-            return shuffledWords.slice(0, numQuestionsToPick);
+            let questions = [];
+            let availableWords = [...words]; // Create a mutable copy of all words
+            
+            // Filter out words that are too recent
+            const filteredWords = availableWords.filter(word => 
+                !recentWordsHistory.includes(word.english)
+            );
+
+            // Prioritize incorrect words for review if available and not too recent
+            let reviewWords = incorrectWordsForReview.filter(word =>
+                !recentWordsHistory.includes(word.english) && 
+                word.lastShownIndex < currentQuestionIndex - incorrectReviewLimit
+            );
+            shuffleArray(reviewWords); // Shuffle review words for random priority
+
+            // Try to pick from review words first
+            while (questions.length < totalQuestions && reviewWords.length > 0) {
+                const word = reviewWords.shift(); // Take from the start of reviewWords
+                questions.push(word);
+            }
+
+            // Fill remaining questions from general filtered words
+            let tempFilteredWords = shuffleArray([...filteredWords]); // Shuffle for randomness
+            while (questions.length < totalQuestions && tempFilteredWords.length > 0) {
+                const word = tempFilteredWords.shift();
+                // Ensure we don't add duplicates from the reviewWords or existing questions
+                if (!questions.some(q => q.english === word.english)) {
+                    questions.push(word);
+                }
+            }
+
+            // Fallback: If not enough unique words based on rules, pick from general words (least ideal but ensures game runs)
+            if (questions.length < totalQuestions) {
+                const backupWords = shuffleArray([...words]);
+                while (questions.length < totalQuestions && backupWords.length > 0) {
+                    const word = backupWords.shift();
+                    if (!questions.some(q => q.english === word.english)) {
+                        questions.push(word);
+                    }
+                }
+            }
+
+            return questions;
         }
 
-        // Generates 3 incorrect Hebrew answers for a given correct answer
+        // Generates 3 incorrect Hebrew answers for a given correct answer, trying to avoid recent incorrect options
         function generateIncorrectAnswers(correctHebrew) {
             const incorrectOptions = [];
-            const allHebrewWords = words.map(w => w.hebrew);
-
-            const potentialIncorrects = allHebrewWords.filter(h => h !== correctHebrew);
-
-            // Ensure we only pick unique incorrect answers and don't include the correct one
-            const shuffledIncorrects = shuffleArray(potentialIncorrects);
-            for (let i = 0; i < 3 && i < shuffledIncorrects.length; i++) {
-                incorrectOptions.push(shuffledIncorrects[i]);
+            const allHebrewWords = words.map(w => w.hebrew).filter(h => h !== correctHebrew);
+            
+            // Prioritize incorrect options that haven't been shown recently as options
+            // This is a more complex heuristic, simple randomness often works well for options
+            // Let's ensure variety by picking from a shuffled list and ensuring uniqueness
+            
+            const shuffledAllHebrew = shuffleArray(allHebrewWords);
+            for (let i = 0; i < 3 && i < shuffledAllHebrew.length; i++) {
+                incorrectOptions.push(shuffledAllHebrew[i]);
             }
             return incorrectOptions;
         }
@@ -379,7 +424,9 @@
 
         // Starts a new game
         function startGame() {
-            currentQuestions = selectRandomQuestions();
+            recentWordsHistory = []; // Clear history for a new game
+            incorrectWordsForReview = []; // Clear incorrect words for a new game
+            currentQuestions = selectRandomQuestions(); // Now intelligently selects questions
             currentQuestionIndex = 0;
             score = 0;
 
@@ -404,6 +451,19 @@
             const currentQuestion = currentQuestions[currentQuestionIndex];
             englishWordDisplay.textContent = currentQuestion.english;
 
+            // Add current word to history and manage its size
+            recentWordsHistory.push(currentQuestion.english);
+            if (recentWordsHistory.length > recentWordsLimit) {
+                recentWordsHistory.shift(); // Remove oldest word if limit exceeded
+            }
+            
+            // Update lastShownIndex for the current word if it's in incorrectReview
+            const reviewWordIndex = incorrectWordsForReview.findIndex(w => w.english === currentQuestion.english);
+            if (reviewWordIndex !== -1) {
+                incorrectWordsForReview[reviewWordIndex].lastShownIndex = currentQuestionIndex;
+            }
+
+
             speakWord();
 
             const correctHebrew = currentQuestion.hebrew;
@@ -426,7 +486,8 @@
         function handleAnswer(event) {
             const selectedButton = event.target;
             const selectedAnswer = selectedButton.dataset.answer;
-            const correctHebrew = currentQuestions[currentQuestionIndex].hebrew;
+            const currentQuestion = currentQuestions[currentQuestionIndex];
+            const correctHebrew = currentQuestion.hebrew;
             let delayTime = 0;
 
             // Disable all answer buttons
@@ -440,6 +501,8 @@
                 feedbackMessage.textContent = 'נכון! 👏';
                 selectedButton.classList.add('correct');
                 delayTime = 1500; // 1.5 seconds for correct answer
+                // Remove from incorrectReview if correctly answered now
+                incorrectWordsForReview = incorrectWordsForReview.filter(w => w.english !== currentQuestion.english);
             } else {
                 feedbackMessage.textContent = `לא בדיוק... התשובה הנכונה היא: ${correctHebrew}`;
                 selectedButton.classList.add('incorrect');
@@ -450,6 +513,14 @@
                     }
                 });
                 delayTime = 3000; // 3 seconds for incorrect answer
+
+                // Add to incorrectReview if not already there, or update last incorrect attempt
+                const existingIncorrect = incorrectWordsForReview.find(w => w.english === currentQuestion.english);
+                if (!existingIncorrect) {
+                    incorrectWordsForReview.push({ english: currentQuestion.english, hebrew: currentQuestion.hebrew, lastShownIndex: currentQuestionIndex });
+                } else {
+                    existingIncorrect.lastShownIndex = currentQuestionIndex; // Update timestamp
+                }
             }
 
             scoreDisplay.textContent = `ניקוד: ${score}`;
@@ -500,8 +571,7 @@
                 window.speechSynthesis.speak(utterance);
             } else {
                 console.warn("Speech Synthesis API not supported in this browser.");
-                // Only show this message if it's not already visible
-                if (feedbackMessage.style.opacity === '0') { // Check opacity instead of hidden class
+                if (feedbackMessage.style.opacity === '0') {
                     feedbackMessage.textContent = "המכשיר שלך לא תומך בהקראת מילים.";
                     feedbackMessage.style.opacity = '1';
                     setTimeout(() => {
